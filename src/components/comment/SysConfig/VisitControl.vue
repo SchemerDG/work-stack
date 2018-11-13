@@ -12,55 +12,55 @@
           </button>
         </div>
         <fieldset>
-          <legend class="title">系统信息</legend>
+          <legend class="title">登录时间</legend>
           <div class='item'>
-            <span>系统名称<i style="color:red">*</i>：</span><input type="text" /></input>
+            <span>允许登录起始时间：</span><input type="text" /></input>
           </div></br>
           <div class='item'>
-            <span>访问地址(本地)：</span><input type="text" /></input>
-          </div></br>
-        </fieldset>
-        <fieldset>
-          <legend class="title">设备连接</legend>
-          <div class='item'>
-            <span style="width:12%">USB连接</span><input type="checkbox" /></input>
-            <span style="width:10%">互联网连接</span><input type="checkbox" /></input>
-            <span style="width:10%">局域网连接</span><input type="checkbox" /></input>
-          </div></br>
-          <div class='item'>
-            <span>IP范围(本地)：</span><input type="text" style="width:11%" /></input><span style="width:3% ;text-align:center;">...</span><input type="text" style="width:11%" />
+            <span>允许登录截止时间：</span><input type="text" /></input>
           </div></br>
         </fieldset>
         <fieldset>
-          <legend class="title">用户登录</legend>
+          <legend class="title">强制退出</legend>
           <div class='item'>
-            <span style="width:12%">服务器登录</span><input type="checkbox" /></input>
-            <span style="width:10%">远程登录</span><input type="checkbox" /></input>
-            <span style="width:10%">本地登录</span><input type="checkbox" /></input>
+            <span style="width:12%">强制退出用户选择：</span><input type="text" style="height:80px"/></input>
           </div></br>
           <div class='item'>
-            <span>IP范围(本地)：</span><input type="text" style="width:11%" /></input><span style="width:3% ;text-align:center;">...</span><input type="text" style="width:11%" />
-          </div></br>
-        </fieldset>
-        <fieldset>
-          <legend class="title">空间设置</legend>
-          <div class='item'>
-            <span>服务器空间/M：</span><input type="text" /></input>
-          </div></br>
-          <div class='item'>
-            <span>用户空间/M：</span><input type="text" /></input>
+            <span style="width:20%"></span>
+            <button type="button" class="mod-btn"  style="background:#3B85C7;" @click="save">
+              <i class="mod-btn-icon fa fa-save"></i>确认
+            </button>
+            <button type="button" class="mod-btn" style="background:#004080;width:86px;"  @click="exit">
+              <i class="mod-btn-icon fa fa-sign-out"></i>添加人员
+            </button>
+            <button type="button" class="mod-btn" style="background:#004080" @click="exit">
+              <i class="mod-btn-icon fa fa-sign-out"></i>删除
+            </button>
           </div></br>
         </fieldset>
         <fieldset>
-          <legend class="title">外部数据接口</legend>
+          <legend class="title">设备控制</legend>
           <div class='item'>
-            <span style="width:12%">允许外部读取：</span><input type="checkbox" /></input>
+            <span style="width:12%">允许远程注册设备</span><input type="checkbox" /></input>
+            <span style="width:10%">允许远程开启设备</span><input type="checkbox" /></input>
+            <span style="width:10%">允许远程关闭设备</span><input type="checkbox" /></input>
           </div></br>
           <div class='item'>
-            <span>外部数据库链接名称：</span><input type="text" /></input>
+            <span style="width:12%">允许远程下载工程</span><input type="checkbox" /></input>
+            <span style="width:10%">允许远程执行工程</span><input type="checkbox" /></input>
+            <span style="width:10%">允许远程删除工程</span><input type="checkbox" /></input>
+          </div></br>
+        </fieldset>
+        <fieldset>
+          <legend class="title">在线控制</legend>
+          <div class='item'>
+            <span>在线用户数量上限：</span><input type="text" /></input>
           </div></br>
           <div class='item'>
-            <span>外部数据库链接地址：</span><input type="text" /></input>
+            <span>最长在线时长控制：</span><input type="text" /></input>
+          </div></br>
+          <div class='item'>
+            <span>无操作退出时长：</span><input type="text" /></input>
           </div></br>
         </fieldset>
       </fieldset>
@@ -70,23 +70,23 @@
 <script>
 import navi from '../../navi/index.vue'
 export default {
-  name: "CoreConfig",
+  name: "VisitControl",
   components: {
    navi,
  },
  computed:{
    menuitem: function () {
-       return this.$store.state.tree[4].children[0];
+       return this.$store.state.tree[4].children[1];
      },
  },
  mounted:function(){
-   console.log(this.$store.state.tree[4].children[0]);
+   
  },
 }
 </script>
 <style lang="less" scoped>
 fieldset{
-  padding: 15px 5px 15px;
+  padding: 2px 5px 15px;
   border: 1px solid rgb(213,215,216);
   margin-left:10px;
   margin-right: 30px;
@@ -100,6 +100,7 @@ fieldset{
   }
   .item{
     font-size: 13px;
+    margin-top:5px;
     width: 100%;
     float: left;
     line-height: 25px;

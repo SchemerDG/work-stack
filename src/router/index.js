@@ -66,6 +66,16 @@ export default new Router({
               name: 'CoreConfig',
               component: r => require.ensure([], () => r(require('../components/comment/SysConfig/CoreConfig')), 'CoreConfig')
             },
+            {
+              path: 'VisitControl',
+              name: 'VisitControl',
+              component: r => require.ensure([], () => r(require('../components/comment/SysConfig/VisitControl')), 'VisitControl')
+            },
+            {
+              path: 'SafeConfig',
+              name: 'SafeConfig',
+              component: r => require.ensure([], () => r(require('../components/comment/SysConfig/SafeConfig')), 'SafeConfig')
+            },
 
           ]
         },

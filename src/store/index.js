@@ -62,12 +62,12 @@ const state = {
       {
         id:11,
         name:'访问控制',
-        route:'/workstack/SysConfig/CoreConfig',
+        route:'/workstack/SysConfig/VisitControl',
       },
       {
         id:12,
         name:'安全设置',
-        route:'/workstack/SysConfig/CoreConfig',
+        route:'/workstack/SysConfig/SafeConfig',
       },
       {
         id:13,
