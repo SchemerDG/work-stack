@@ -1,0 +1,202 @@
+
+  .middle_li{
+    margin-top: 2px;
+    height:21px;
+    width:auto;
+  //  display:inline-block;
+    white-space: nowrap;
+    cursor:pointer;
+    //min-width:620px;
+    padding-right: 20px;
+    padding-left:5px;
+  }
+  .middle_instr{
+     font-size: 14px;
+     display: inline-block;
+     //background-color: rgb(223, 223, 223);
+     border-radius:15px;
+     width: 94px;
+     height: 21px;
+     padding-left:5px;
+     background-color: #8080ff;
+   }
+   .middle_ideviceName{
+     font-size: 14px;
+     display: inline-block;
+     position: relative;
+     min-width: 80px;
+     height: 21px;
+     line-height:21px;
+     padding-left:5px;
+     overflow:visible;
+     background-color: rgb(223, 223, 223);
+   }
+   .middle_ideviceName:after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right:-14px;
+     height: 0;
+     width: 0;
+     border-top:10.5px solid  transparent;
+     border-bottom: 10.5px solid  transparent;
+     border-left: 14px solid rgb(223, 223, 223);
+   }
+   .middle_instructionName{
+     font-size: 14px;
+     display: inline-block;
+     position: relative;
+     height: 21px;
+     line-height:21px;
+     min-width: 64px;
+     padding-left:2px;
+     overflow:visible;
+     margin-left:16px;
+     background-color: rgb(223, 223, 223);
+   }
+   .middle_instructionName:before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: -14px;
+     height: 0;
+     width: 0px;
+     border-top:10.5px solid  rgb(223, 223, 223);
+     border-bottom: 10.5px solid  rgb(223, 223, 223);
+     border-left: 14px solid transparent;
+   }
+   .middle_instructionName:after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right: -14px;
+     height: 0;
+     width: 0;
+     border-top:10.5px solid  transparent;
+     border-bottom: 10.5px solid  transparent;
+     border-left: 14px solid rgb(223, 223, 223);
+   }
+   .middle_instructionPara{
+     font-size: 14px;
+     display: inline-block;
+     position: relative;
+     height: 21px;
+     line-height:21px;
+     min-width: 64px;
+     padding-left:2px;
+     overflow:visible;
+     margin-left:16px;
+     background-color: rgb(223, 223, 223);
+   }
+   .middle_instructionPara:before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: -14px;
+     height: 0;
+     width: 0px;
+     border-top:10.5px solid  rgb(223, 223, 223);
+     border-bottom: 10.5px solid  rgb(223, 223, 223);
+     border-left: 14px solid transparent;
+   }
+   .middle_instructionPara:after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right: -14px;
+     height: 0;
+     width: 0;
+     border-top:10.5px solid  transparent;
+     border-bottom: 10.5px solid  transparent;
+     border-left: 14px solid rgb(223, 223, 223);
+   }
+   .middle_ideviceName_use{
+     font-size: 14px;
+     display: inline-block;
+     position: relative;
+     min-width: 64px;
+     height: 21px;
+     line-height:21px;
+     padding-left:5px;
+     overflow:visible;
+     background-color: #808080;
+   }
+   .middle_ideviceName_use:after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right:-14px;
+     height: 0;
+     width: 0;
+     border-top:10.5px solid  transparent;
+     border-bottom: 10.5px solid  transparent;
+     border-left: 14px solid  #808080;
+   }
+   .middle_instructionName_use{
+     font-size: 14px;
+     display: inline-block;
+     position: relative;
+     height: 21px;
+     line-height:21px;
+     min-width: 64px;
+     padding-left:2px;
+     overflow:visible;
+     margin-left:16px;
+     background-color: #808080;
+   }
+   .middle_instructionName_use:before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: -14px;
+     height: 0;
+     width: 0px;
+     border-top:10.5px solid   #808080;
+     border-bottom: 10.5px solid   #808080;
+     border-left: 14px solid transparent;
+   }
+   .middle_instructionName_use:after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right: -14px;
+     height: 0;
+     width: 0;
+     border-top:10.5px solid  transparent;
+     border-bottom: 10.5px solid  transparent;
+     border-left: 14px solid  #808080;
+   }
+   .middle_instructionPara_use{
+     font-size: 14px;
+     display: inline-block;
+     position: relative;
+     height: 21px;
+     line-height:21px;
+     min-width: 64px;
+     padding-left:2px;
+     overflow:visible;
+     margin-left:16px;
+     background-color:  #808080;
+   }
+   .middle_instructionPara_use:before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: -14px;
+     height: 0;
+     width: 0px;
+     border-top:10.5px solid   #808080;
+     border-bottom: 10.5px solid   #808080;
+     border-left: 14px solid transparent;
+   }
+   .middle_instructionPara_use:after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right: -14px;
+     height: 0;
+     width: 0;
+     border-top:10.5px solid  transparent;
+     border-bottom: 10.5px solid  transparent;
+     border-left: 14px solid  #808080;
+   }

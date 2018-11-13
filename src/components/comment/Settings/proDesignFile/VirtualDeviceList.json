@@ -1,0 +1,24 @@
+{
+  "data": [
+            {
+              "id": 1,
+              "name": "ISC综合保障舱",
+              "softwareVersion": "sdassdsasdV1.1"
+            },
+            {
+              "id": 2,
+              "name": "CTC控制舱",
+              "softwareVersion": "dsadsasdV1.1"
+            },
+            {
+              "id": 3,
+              "name": "PFC堆栈动作执行舱",
+              "softwareVersion": "dsadsasdV1.3"
+            },
+            {
+              "id": 4,
+              "name": "BSC电池舱",
+              "softwareVersion": "dsadsasdV1.3"
+            }
+          ]
+}

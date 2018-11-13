@@ -1,0 +1,96 @@
+{
+	"status": 200,
+	"data": [
+		{
+			"id": 1,
+			"name": "变形金刚系统",
+			"children": [
+				{
+					"id": 1001,
+					"name": "在线仓储单元1",
+					"children": [
+					{
+						"id": 1001001,
+						"name": "ISC综合保障舱",
+						"controllModel": "123456",
+						"ExcuteModel": "654321",
+						"softwareVersion": "sdassdsasdV1.1"
+					},
+					{
+						"id": 1001002,
+						"name": "CTC控制舱",
+						"controllModel": "123456",
+						"ExcuteModel": "654321",
+						"softwareVersion": "sdassdsasdV1.1"
+					},
+					{
+						"id": 1001003,
+						"name": "PFC堆栈动作执行舱",
+						"controllModel": "123456",
+						"ExcuteModel": "654321",
+						"softwareVersion": "sdassdsasdV1.3"
+					}
+				]
+				},
+				{
+					"id": 1002,
+					"name": "传送单元11",
+					"children": [
+						{
+							"id": 1002001,
+							"name": "ISC综合保障舱",
+							"controllModel": "123456",
+							"ExcuteModel": "654321",
+							"softwareVersion": "sdassdsasdV1.1"
+						},
+						{
+							"id": 1002002,
+							"name": "CTC控制舱",
+							"controllModel": "123456",
+							"ExcuteModel": "654321",
+							"softwareVersion": "sdassdsasdV1.1"
+						},
+						{
+							"id": 1002003,
+							"name": "PFC堆栈动作执行舱",
+							"controllModel": "123456",
+							"ExcuteModel": "654321",
+							"softwareVersion": "sdassdsasdV1.3"
+						}
+					]
+				},
+				{
+					"id": 1003,
+					"name": "传送单元12"
+				}
+		]
+		},
+		{
+			"id": 2,
+			"name": "顾中学实验平台",
+			"children": [
+				{
+					"id": 2001,
+					"name": "ISC综合保障舱",
+					"controllModel": "123456",
+					"ExcuteModel": "654321",
+					"softwareVersion": "sdassdsasdV1.1"
+				},
+				{
+					"id": 2002,
+					"name": "CTC控制舱",
+					"controllModel": "123456",
+					"ExcuteModel": "654321",
+					"softwareVersion": "sdassdsasdV1.1"
+				},
+				{
+					"id": 2003,
+					"name": "PFC堆栈动作执行舱",
+					"controllModel": "123456",
+					"ExcuteModel": "654321",
+					"softwareVersion": "sdassdsasdV1.3"
+				}
+			]
+		}
+	]
+}
