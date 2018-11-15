@@ -322,6 +322,7 @@ export default {
     },
     success: function(data){
       that.logic_instr=data;
+      console.log("first that.logic_instr",that.logic_instr);
   }
 })
   },
@@ -991,6 +992,12 @@ export default {
                   var param=params.slice(1);
                   that.$options.methods.addSelect(li_1,value,param,param_name,'middle_instructionName');
                 }
+                /*else if(params[0].split('|')[0]=='IF_type')
+                {
+                  console.log('value',value);
+                  var param=params.slice(1);
+                  that.$options.methods.addSelect(li_1,value,param,param_name,'middle_instructionName');
+                }*/
                 else if (params[0].split('|')[0]=='Int') {
                   console.log('value',value);
                   that.$options.methods.addInput(li_1,value,param_name,'middle_instructionName','int');
@@ -1115,8 +1122,11 @@ export default {
               "real_device_id":nodes[0].real_device_id,
             },
             success: function(data){
+              console.log("logic_instr",that.logic_instr);
+              console.log("data",data);
               that.user_instr=data;
-              that.instructionList=that.logic_instr;
+              that.instructionList=[];
+              that.instructionList.push(...that.logic_instr);
               that.instructionList.push(...that.user_instr);
 
               console.log(that.instructionList);
@@ -1308,7 +1318,8 @@ export default {
       .instructionPara{
         position: relative;
         height: 21px;
-        width: 64px;
+      //  min-width: 64px;
+        width: auto;
         padding-left:2px;
         overflow:visible;
         margin-left:14px;
@@ -1329,7 +1340,7 @@ export default {
         content: '';
         position: absolute;
         top: 0;
-        left: 64px;
+        left: auto;
         height: 0;
         width: 0;
         border-top:10.5px solid  transparent;
