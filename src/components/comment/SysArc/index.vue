@@ -1,8 +1,8 @@
 <template>
   <div>
-    <navi :menuitem=menuitem></navi>
+    <navi :menuitem='menuitem'></navi>
     <div class="sysarc">
-      <pagetitle :pageTitle='pageTitle'/>
+      <pagetitle :pageTitle='pageTitle'></pagetitle>
       <div class="container-fluid">
         <div class="row">
           <div class="md-3">
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="md-9">
-            <sysarc_right v-if='sysarc_right_on' :unit_data='unit_data' :unit_data1='unit_data1' :log_data='log_data' :status='status' :belongs='belongs' v-on:refresh="refresh"/>
+            <sysarc_right v-if='sysarc_right_on' :unit_data='unit_data' :unit_data1='unit_data1' :log_data='log_data' :status='status' :belongs='belongs' v-on:refresh="refresh"></sysarc_right >
           </div>
         </div>
       </div>
@@ -41,7 +41,6 @@ import pagetitle from '../../utils/PageTitle'
 import buttons from '../../utils/Buttons'
 import sysarc_right from './components/SysArc_Right'
 import 'ztree'
-import '../../../plugins/ztreejs/jquery.ztree.exedit.js'
 import '../../../plugins/treecss/system_tree_style/Style.css'
 //import '../../../plugins/treecss/metroStyle/metroStyle.css'
 export default {
@@ -303,7 +302,7 @@ export default {
         this.sysarc_right_on=true;
       },
     showIconForTree:function(treeId, treeNode) {
-      	return treeNode.type != 'subsystem'||true;
+      	return treeNode.type != 'subsystem';
       },
     zTreeOnRename:function(event, treeId, treeNode, isCancel) {
       console.log('isCancel',isCancel);
@@ -332,8 +331,7 @@ export default {
                 "subsystem_name":treeNode.name,
               },
               success: function(data){
-                that.tree=data;
-                console.log(data);
+                this.$options.methods.refresh();
             }
           })
           }
@@ -343,7 +341,6 @@ export default {
         var treeObj = $.fn.zTree.getZTreeObj("systemtree");
         treeObj.removeNode(treeNode);
       }
-
     },
 
   }

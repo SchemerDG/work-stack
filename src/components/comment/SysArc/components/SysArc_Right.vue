@@ -79,7 +79,6 @@ export default {
      },
      description_save:'',
      description_last:'',
-     status:-1,
      option: {
        type: 'day',
        week: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
@@ -178,7 +177,7 @@ export default {
        this.description_last=this.usersignup.description;
        console.log(this.description_last);
      }
-     this.usersignup=curVal;
+    // this.usersignup=curVal;
      console.log('watch',this.usersignup);
    },
    status:function(curVal,oldVal){
@@ -188,7 +187,7 @@ export default {
        this.description_save=this.usersignup.description;
        this.description_last=this.usersignup.description;
      }
-     this.status=curVal;
+    // this.status=curVal;
      console.log('watch',this.status);
      console.log(this.description_last);
    }
@@ -277,13 +276,14 @@ export default {
              "subsystem_information":new_data,
            },
            success: function(data){
-             this.description_save=this.description_last;
-             this.usersignup.description=this.description_last;
+             // this.description_save=this.description_last;
+             // this.usersignup.description=this.description_last;
              console.log(data);
              that.$emit('refresh');
          }
          })
        }else if (this.status==2) {
+
          $.ajax({
            url: "save_unit_information.php",
            type:'POST',
@@ -292,10 +292,13 @@ export default {
              "unit_information":new_data,
            },
            success: function(data){
-           this.description_save=this.description_last;
-           this.usersignup.description=this.description_last;
-           console.log('tree',data);
+             console.log('x');
+           //this.description_save=this.description_last;
+          // this.usersignup.description=this.description_last;
+           console.log(data);
+           console.log('a');
            that.$emit('refresh');
+           console.log('b');
          }
          })
        }
@@ -308,8 +311,8 @@ export default {
              "device_information":new_data,
            },
            success: function(data){
-             this.description_save=this.description_last;
-             this.usersignup.description=this.description_last;
+             // this.description_save=this.description_last;
+             // this.usersignup.description=this.description_last;
              console.log('tree',data);
              that.$emit('refresh');
          }
