@@ -39,6 +39,7 @@
    methods: {
 
      to: function () {
+       console.log('OK');
         var userName =$("#userName").val();
         var passWord =$("#passWord").val();
         // var passWords = this.$md5(passWord);
