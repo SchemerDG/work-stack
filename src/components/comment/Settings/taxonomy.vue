@@ -38,7 +38,7 @@
             	<tbody>
           		<tr v-for='(classsettings, index) in classsettings' class="trstyle" v-if="(13*(page-1))<=index&&index<(13*page)">
                 <td class="td-index">{{index+1}}</td>
-                <td><input type="checkbox" class='checkbox' v-bind:name="classsettings.id"></input></td>
+                <td><input type="checkbox" class='checkbox' v-bind:name="classsettings.id" v-bind:value='classsettings.engineeringnum'></input></td>
                 <td><button @click.prevent='openMadal(index)' class="alterbtn">修改</button></td>
           			<td><span>{{classsettings.classname}}</span></td>
           			<td><span>{{classsettings.classinstruction}}</span></td>
@@ -73,7 +73,7 @@
           <i class="mod-btn-icon fa fa-refresh" style="color: rgb(129, 139, 211);"></i>
         </button>
       </div>
-        <alter v-if="isAlter" v-show="isAlter" @isAlter='closeMadal' :alertdata=alertdata :msg=msg></alter>
+        <alter v-if="isAlter" v-show="isAlter" @isAlter='closeMadal' :alertdata='alertdata' :msg='msg'></alter>
     </div>
   </div>
 
@@ -82,6 +82,7 @@
 <script>
 import alter from './alter.vue'
 import navi from '../../navi/index.vue'
+var that={};
 export default {
   name: 'taxonomy',
   components: {
@@ -110,9 +111,11 @@ export default {
           return this.$store.state.tree[3].children[0]
         }
   },
+  mounted:function () {
+    that=this;
+  },
   methods: {
       add: function() {
-        var that = this;
         var status=true;
         for(var i=0;i<this.classsettings.length;i++){
           if(this.classsettings[i].classname==="未命名"){
@@ -138,13 +141,14 @@ export default {
         }
       },
       dele: function() {
-          var that=this;
           let checkDom=this.$refs.table.getElementsByClassName("checkbox");
-
+          console.log(checkDom);
           var j=0;
           for (var i=0;i<checkDom.length;i++)
           {
-            if(checkDom[i].checked)
+            console.log(checkDom[i].value);
+            console.log(checkDom[i].value=='0');
+            if(checkDom[i].checked&&checkDom[i].value=='0')
             {
               that.del_id[j]=checkDom[i].name;
               console.log(checkDom[i].name);
@@ -164,22 +168,20 @@ export default {
                 "data":that.del_id,
               },
               success:function(data){
-                console.log("ajax");
-                that.classsettings =data;
-                console.log(that.classsettings);
+                that.$options.methods.refresh();
               }
             })
           }
       },
       refresh: function() {
-        var that=this;
+
          $.ajax({
            url:"get_classification_settings.php",
            dataType:"Json",
            type:"POST",
            data:{"getinfo":"i'need classification settings list"},
            success:function(data){
-             console.log("ajax");
+             console.log("ajaxx","ajax");
              that.classsettings =data;
              console.log(that.classsettings);
            }
@@ -222,7 +224,6 @@ export default {
       },
       closeMadal: function() {
         //写ajax
-        var that=this;
          $.ajax({
            url:"get_classification_settings.php",
            dataType:"Json",
@@ -237,7 +238,6 @@ export default {
       },
       search: function() {
         console.log("search");
-        var that=this;
         that.inputmsg = $(".input-1").value;
         console.log(inputmsg);
         console.log(inputmsg);
@@ -257,7 +257,6 @@ export default {
    },
    created:function() {
        console.log("created");
-       var that=this;
         $.ajax({
           url:"get_classification_settings.php",
           dataType:"Json",
@@ -272,7 +271,6 @@ export default {
    },
    watch:{
      inputmsg: function(curVal,oldVal){
-       var that =this;
        console.log(curVal);
        $.ajax({
          url:"search_classification_settings.php",

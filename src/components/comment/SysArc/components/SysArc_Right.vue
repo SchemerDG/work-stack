@@ -229,6 +229,7 @@ export default {
        this.isLog=false;
        break;
        case 'log':
+
       this.isModel=false;
        this.isModel0=false;
        this.isLog=true;
@@ -276,10 +277,9 @@ export default {
              "subsystem_information":new_data,
            },
            success: function(data){
-             // this.description_save=this.description_last;
-             // this.usersignup.description=this.description_last;
-             console.log(data);
+
              that.$emit('refresh');
+
          }
          })
        }else if (this.status==2) {
@@ -303,6 +303,7 @@ export default {
          })
        }
        else if (this.status==3) {
+         this.description_save=this.usersignup.description;
          $.ajax({
            url: "save_device_information.php",
            type:'POST',

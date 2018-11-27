@@ -168,13 +168,8 @@ export default {
     icons_change:function(data){
       for (var p1 in data)
       {
-        console.log(p1);
-        console.log(data);
-        console.log(data[p1]);
-        console.log(icons_TCP通讯_已上电);
         if(p1=="icon")
         {
-          console.log(p1);
 
           switch (data[p1]) {
             case "TCP通讯_已上电":
@@ -200,14 +195,12 @@ export default {
         }
         if(p1=="children")
         {
-          console.log(data[p1]);
           for(var i=0;i<data[p1].length;i++)
           {
             data[p1][i]=that.$options.methods.icons_change(data[p1][i]);
           }
         }
       }
-      console.log(data);
       return data;
     },
     addressing: function() {

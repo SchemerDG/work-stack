@@ -54,15 +54,21 @@ export default {
   computed: {
     logs: function(){
       //return [];
+      if(this.log_data.length>0)
       return [this.log_data[0]];
-
+      else
+      return [{
+        date: '',
+        operation: '',
+        result: '',
+        operator: '',
+      }];
     },
     device_logs:function(){
       return this.log_data;
     }
   },
   data: () => ({
-
   })
 }
 </script>
