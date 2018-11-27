@@ -1,8 +1,8 @@
 <template>
   <div>
-    <navi :menuitem=menuitem></navi>
+    <navi :menuitem='menuitem'></navi>
     <div class="sysarc">
-      <pagetitle :pageTitle='pageTitle'/>
+      <pagetitle :pageTitle='pageTitle'></pagetitle>
       <div class="container-fluid">
         <div class="row">
           <div class="md-3">
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="md-9">
-            <sysarc_right v-if='sysarc_right_on' :unit_data='unit_data' :unit_data1='unit_data1' :log_data='log_data' :status='status' :belongs='belongs' v-on:refresh="refresh"/>
+            <sysarc_right v-if='sysarc_right_on' :unit_data='unit_data' :unit_data1='unit_data1' :log_data='log_data' :status='status' :belongs='belongs' v-on:refresh="refresh"></sysarc_right >
           </div>
         </div>
       </div>
@@ -41,9 +41,15 @@ import pagetitle from '../../utils/PageTitle'
 import buttons from '../../utils/Buttons'
 import sysarc_right from './components/SysArc_Right'
 import 'ztree'
-import '../../../plugins/ztreejs/jquery.ztree.exedit.js'
 import '../../../plugins/treecss/system_tree_style/Style.css'
+import icons_CAN通讯_已上电 from "../../../icons/系统架构/CAN通讯_已上电.png"
+import icons_CAN通讯_未上电 from "../../../icons/系统架构/CAN通讯_未上电.png"
+import icons_TCP通讯_已上电 from "../../../icons/系统架构/TCP通讯_已上电.png"
+import icons_USB通讯_已上电 from "../../../icons/系统架构/USB通讯_已上电.png"
+import icons_已离线 from "../../../icons/系统架构/已离线.png"
+import icons_总系统 from "../../../icons/系统架构/总系统.png"
 //import '../../../plugins/treecss/metroStyle/metroStyle.css'
+var that={};
 export default {
   name: 'sysarc',
   components: {
@@ -120,7 +126,6 @@ export default {
         callback: {
           onClick: this.zTreeOnClick,
           onRename: this.zTreeOnRename,
-
         }
       },
     }
@@ -134,10 +139,10 @@ export default {
       }
   },
     mounted(){
+      that=this;
       console.log('MOUNNTED',this.nodeData);
       var treeObj =$.fn.zTree.init($("#systemtree"), this.setting, this.nodeData);
       treeObj.expandAll(true);
-      var that=this;
       $.ajax({
         url: "get_subsystems.php",
         type:'POST',
@@ -146,8 +151,7 @@ export default {
           "subsystem":"subsystem",
         },
         success: function(data){
-          that.tree=data;
-          console.log('tree',data);
+          that.tree=that.$options.methods.icons_change(data);
           var treeObj =$.fn.zTree.init($("#systemtree"), that.setting, that.nodeData);
           treeObj.expandAll(true);
       }
@@ -161,6 +165,51 @@ export default {
     },
  },
   methods: {
+    icons_change:function(data){
+      for (var p1 in data)
+      {
+        console.log(p1);
+        console.log(data);
+        console.log(data[p1]);
+        console.log(icons_TCP通讯_已上电);
+        if(p1=="icon")
+        {
+          console.log(p1);
+
+          switch (data[p1]) {
+            case "TCP通讯_已上电":
+              data[p1]=icons_TCP通讯_已上电;
+              break;
+            case "USB通讯_已上电":
+              data[p1]=icons_USB通讯_已上电;
+              break;
+            case "CAN通讯_已上电":
+              data[p1]=icons_CAN通讯_已上电;
+              break;
+            case "CAN通讯_未上电":
+              data[p1]=icons_CAN通讯_未上电;
+              break;
+            case "总系统":
+              data[p1]=icons_总系统;
+              break;
+            case "已离线":
+              data[p1]=icons_已离线;
+              break;
+            default:
+          }
+        }
+        if(p1=="children")
+        {
+          console.log(data[p1]);
+          for(var i=0;i<data[p1].length;i++)
+          {
+            data[p1][i]=that.$options.methods.icons_change(data[p1][i]);
+          }
+        }
+      }
+      console.log(data);
+      return data;
+    },
     addressing: function() {
       console.log("敬请期待......");
     },
@@ -175,7 +224,6 @@ export default {
       treeObj.editName(treeObj.getNodeByParam('id','-1',null));
     },
     dele: function() {
-      var that=this;
       var treeObj = $.fn.zTree.getZTreeObj("systemtree");
       var nodes = treeObj.getSelectedNodes();
       for(var i=0;i<nodes.length;i++)
@@ -190,7 +238,7 @@ export default {
               "subsystem_id":nodes[i].id,
             },
             success: function(data){
-              that.tree=data;
+              that.$options.methods.refresh();
               console.log('tree',data);
           }
         })
@@ -199,7 +247,6 @@ export default {
 
     },
     refresh: function() {
-      var that=this;
         $.ajax({
           url: "get_subsystems.php",
           type:'POST',
@@ -208,13 +255,12 @@ export default {
             "subsystem":"subsystem",
           },
           success: function(data){
-            that.tree=data;
+            that.tree=that.$options.methods.icons_change(data);
             console.log(data);
         }
       })
     },
     get_subsystems:function(id,treeNode){
-      var that=this;
         $.ajax({
           url: "get_subsystem_information.php",
           type:'POST',
@@ -231,7 +277,6 @@ export default {
       })
     },
     get_units:function(id,treeNode){
-      var that=this;
         $.ajax({
           url: "get_unit_information.php",
           type:'POST',
@@ -261,7 +306,6 @@ export default {
       })
     },
     get_devices:function(id,treeNode){
-      var that=this;
         $.ajax({
           url: "get_device_information.php",
           type:'POST',
@@ -303,7 +347,7 @@ export default {
         this.sysarc_right_on=true;
       },
     showIconForTree:function(treeId, treeNode) {
-      	return treeNode.type != 'subsystem'||true;
+      	return treeNode.type != 'subsystem';
       },
     zTreeOnRename:function(event, treeId, treeNode, isCancel) {
       console.log('isCancel',isCancel);
@@ -322,7 +366,6 @@ export default {
           if(treeNode.id=='-1')
           {
             treeNode.id='';
-            var that=this;
             console.log(treeNode.name);
             $.ajax({
               url: "new_subsystem.php",
@@ -332,8 +375,7 @@ export default {
                 "subsystem_name":treeNode.name,
               },
               success: function(data){
-                that.tree=data;
-                console.log(data);
+                that.$options.methods.refresh();
             }
           })
           }
@@ -343,7 +385,6 @@ export default {
         var treeObj = $.fn.zTree.getZTreeObj("systemtree");
         treeObj.removeNode(treeNode);
       }
-
     },
 
   }

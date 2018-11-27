@@ -34,13 +34,13 @@
      navi
    },
    computed: {
-         loginUser:function(){
-           return this.$route.params.loginUser;
-         }
+         // loginUser:function(){
+         //   return this.$route.params.loginUser;
+         // }
    },
    watch: {
      loginUser:function(curVal,oldVal){
-       this.loginUser = curVal;
+       //this.loginUser = curVal;
      }
    },
    created: function(){
