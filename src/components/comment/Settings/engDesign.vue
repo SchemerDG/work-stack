@@ -115,9 +115,9 @@
           </div>
         </div>
       </div>
-      <alter v-if="isAlter" @isAlter='closeAlterMadal' :alertdata=alertdata :msg=msg></alter>
-      <alter2 v-if="isAlter2" @isAlter2='closeMadal' :project=project @submitbtn='getinfo' :classsettings=classsettings :neworalt='neworalt'></alter2>
-      <prodesign v-if="isProd" @isProd='closeProdMadal':index=index :eng_id='eng_id'></prodesign>
+      <alter v-if="isAlter" @isAlter='closeAlterMadal' :alertdata='alertdata' :msg='msg'></alter>
+      <alter2 v-if="isAlter2" @isAlter2='closeMadal' :project='project' @submitbtn='getinfo' :classsettings='classsettings' :neworalt='neworalt'></alter2>
+      <prodesign v-if="isProd" @isProd='closeProdMadal':index='index' :eng_id='eng_id'></prodesign>
     </div>
   </div>
 
@@ -133,6 +133,11 @@ import prodesign from './proDesign.vue'
 import alter from './alter.vue'
 import  'ztree'
 import '../../../plugins/treecss/proa_tree_style/Style.css'
+import icons_管理 from "../../../icons/工程设计/管理.png"
+import icons_成员 from "../../../icons/工程设计/成员.png"
+import icons_查阅 from "../../../icons/工程设计/查阅.png"
+import icons_系统 from "../../../icons/工程设计/系统.png"
+import icons_总系统 from "../../../icons/工程设计/总系统.png"
 var that={};
 export default {
   name: 'engDesign',
@@ -213,12 +218,30 @@ export default {
       },
       success: function(data){
         that.classsettings=[];
-        var structx={'name':'所有分类','classification_id':-1,'children':[]};
+        var structx={'name':'所有分类','classification_id':-1,'icon':icons_总系统,'children':[]};
 
         var children=[];
         for(var i=0;i<data.length;i++)
         {
-          var struct={'name':data[i].classname,'classification_id':data[i].id};
+            switch (data[i]['icon']) {
+              case "管理":
+                data[i]['icon']=icons_管理;
+                break;
+              case "成员":
+                data[i]['icon']=icons_成员;
+                break;
+              case "查阅":
+                data[i]['icon']=icons_查阅;
+                break;
+              case "总系统":
+                data[i]['icon']=icons_总系统;
+                break;
+              case "系统":
+                data[i]['icon']=icons_系统;
+                break;
+              default:
+            }
+          var struct={'name':data[i].classname,'classification_id':data[i].id,'icon':data[i].icon};
           structx.children.push(struct);
         }
         that.classsettings.push(structx);

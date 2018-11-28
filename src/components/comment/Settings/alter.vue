@@ -10,15 +10,15 @@
       </div>
       <div class="content">
         <div class="classname">
-          <span class="name">分类名称 <i style="color:red"> * </i>:</span>
+          <span class="name">分类名称 <i style="color:red">*</i>:</span>
           <input type="text" v-model='alertdata.classname' :readonly='onlyUser'>
         </div>
         <div class="classinstruction">
-          <span class="name">分类说明  :</span>
+          <span class="name">分类说明  &ensp;:</span>
           <textarea v-model='alertdata.classinstruction'></textarea>
         </div>
         <div class="managers">
-          <span class="name">分类管理  :</span>
+          <span class="name">分类管理  &ensp;:</span>
           <input type="text" v-model='managersx' id="cs" readonly= "true" :disabled='onlyUser'>
           <div class="btns">
             <button  class="btn btn-default " style="background-color: rgb(108, 160, 255)" @click="addperson0" :disabled='onlyUser'>添加人员</button>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="membersdiv">
-          <span class="name">分类成员  :</span>
+          <span class="name">分类成员 &ensp;:</span>
           <textarea v-model='membersx' id="csm" readonly= "true "></textarea>
           <div class="btns">
             <button class="btn btn-default" style="background-color: rgb(108, 160, 255)" @click="addperson1">添加人员</button>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="consulter">
-          <span class="name">分类查阅  :</span>
+          <span class="name">分类查阅 &ensp;:</span>
           <textarea v-model='readersx' id="csc" readonly= "true "></textarea>
           <div class="btns">
             <button class="btn btn-default" style="background-color: rgb(108, 160, 255)" @click="addperson2">添加人员</button>

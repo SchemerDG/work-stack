@@ -170,7 +170,6 @@ export default {
       {
         if(p1=="icon")
         {
-
           switch (data[p1]) {
             case "TCP通讯_已上电":
               data[p1]=icons_TCP通讯_已上电;
