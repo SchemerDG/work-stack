@@ -6,8 +6,7 @@
       <div class="md-2">
         <div class="content">
           <div class="content-top">
-            <button type="button" class="mod-btn" @click='openAlter1Madal'>
-              <!-- <i class="mod-btn-icon fa fa-refresh"></i>刷新 -->
+            <button type="button" class="mod-btn" @click='openAlter1Madal()' :disabled='change_button_disabled("管理")' :style='change_button_backgroundcolor("管理")'>
               管理
             </button>
              <span>工程类别列表</span>
@@ -24,16 +23,16 @@
             <button type="button" class="mod-btn mod-btn-ref" @click='refresh'>
               <i class="mod-btn-icon fa fa-refresh" ></i>刷新
             </button>
-            <button type="button" class="mod-btn mod-btn-add" @click.prevent='openMadal(-1)'>
+            <button type="button" class="mod-btn mod-btn-add" @click.prevent='openMadal(-1)' :disabled='change_button_disabled("新建")' :style='change_button_backgroundcolor("新建")'>
               <i class="mod-btn-icon fa fa-plus" ></i>新建
             </button>
-            <button type="button" class="mod-btn mod-btn-imp">
+            <button type="button" class="mod-btn mod-btn-imp" :disabled='change_button_disabled("导入")' :style='change_button_backgroundcolor("导入")'>
               <i class="mod-btn-icon fa fa-reply"></i>导入
             </button>
             <!-- <button type="button" class="mod-btn mod-btn-rank" @click="showButtonList" @blur="hiddenList">
               <i class="mod-btn-icon fa fa-sort"></i>排序
             </button>-->
-            <select id="eng_rank" class="mod-btn mod-btn-rank" v-on:change="rank_change($event)">
+            <select id="eng_rank" class="mod-btn mod-btn-rank" v-on:change="rank_change($event)" >
               <option  v-for="rank in rank_way" :value="rank.text">
                 {{rank.text}}</option>
             </select>
@@ -165,6 +164,7 @@ export default {
         classification_id:'',
         category:'',
         alertdata:'',
+        user_eng_ac:'',
         _showbuttonlist:false,
         rank_way:[{text:'排序'},{text:'工程名称'},{text:'建立时间'},{text:'设计人'},{text:'状态'},{text:'修改时间'}],
         setting:{
@@ -219,10 +219,10 @@ export default {
       success: function(data){
         that.classsettings=[];
         var structx={'name':'所有分类','classification_id':-1,'icon':icons_总系统,'children':[]};
-
         var children=[];
         for(var i=0;i<data.length;i++)
         {
+            data[i]['user_eng_ac']=data[i]['icon'];
             switch (data[i]['icon']) {
               case "管理":
                 data[i]['icon']=icons_管理;
@@ -241,7 +241,7 @@ export default {
                 break;
               default:
             }
-          var struct={'name':data[i].classname,'classification_id':data[i].id,'icon':data[i].icon};
+          var struct={'name':data[i].classname,'classification_id':data[i].id,'icon':data[i].icon,'user_eng_ac':data[i].user_eng_ac};
           structx.children.push(struct);
         }
         that.classsettings.push(structx);
@@ -253,7 +253,60 @@ export default {
     treeObj.expandAll(true);
   },
   methods: {
-
+    change_button_backgroundcolor:function(data){
+      switch (data) {
+        case '管理':
+          var style='';
+          if(this.user_eng_ac=='管理')
+          style= "background-color: rgb(104, 147, 77)";
+          else {
+            style="background-color: rgb(227, 227, 227)";
+          }
+          break;
+        case '新建':
+          if(this.user_eng_ac=='管理'||this.user_eng_ac=='成员')
+          style= "background-color: rgb(59, 133, 199)";
+          else {
+            style="background-color: rgb(227, 227, 227)";
+          }
+          break;
+        case '导入':
+          if(this.user_eng_ac=='管理'||this.user_eng_ac=='成员')
+          style= "background-color: rgb(111, 155, 210)";
+          else {
+            style="background-color: rgb(227, 227, 227)";
+          }
+          break;
+        default:
+      }
+      return style;
+    },
+    change_button_disabled:function(data){
+      var disabled=false;
+      switch (data) {
+        case '管理':
+          if(this.user_eng_ac=='管理')
+            disabled= false;
+          else {
+            disabled=true;
+          }
+          break;
+        case '新建':
+          if(this.user_eng_ac=='管理'||this.user_eng_ac=='成员')
+            disabled= false;
+          else
+            disabled=true;
+          break;
+        case '导入':
+          if(this.user_eng_ac=='管理'||this.user_eng_ac=='成员')
+            disabled= false;
+          else
+            disabled=true;
+          break;
+        default:
+      }
+      return disabled;
+    },
     getinfo:function(){
       console.log('return');
       this.isAlter2=false;
@@ -432,7 +485,7 @@ export default {
       }
     },
     openAlter1Madal: function() {
-
+      console.log("管理按钮");
       if(that.classification_id!=-1)
       {
         $.ajax({
@@ -522,6 +575,9 @@ export default {
     },
     zTreeOnClick:function(event, treeId, treeNode) {
       console.log(treeNode.tId + ", " + treeNode.name);
+      that.user_eng_ac=treeNode.user_eng_ac;
+      console.log(treeNode);
+      console.log(treeNode.user_eng_ac);
       that.classification_id = treeNode.classification_id;
       that.category=treeNode.name;
       console.log(that.classification_id);
