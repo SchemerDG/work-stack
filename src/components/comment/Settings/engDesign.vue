@@ -26,9 +26,12 @@
             <button type="button" class="mod-btn mod-btn-add" @click.prevent='openMadal(-1)' :disabled='change_button_disabled("新建")' :style='change_button_backgroundcolor("新建")'>
               <i class="mod-btn-icon fa fa-plus" ></i>新建
             </button>
-            <button type="button" class="mod-btn mod-btn-imp" :disabled='change_button_disabled("导入")' :style='change_button_backgroundcolor("导入")'>
+            <button type="button" class="mod-btn mod-btn-imp" :disabled='change_button_disabled("导入")' :style='change_button_backgroundcolor("导入")' @click='inport_eng()'>
               <i class="mod-btn-icon fa fa-reply"></i>导入
             </button>
+            <input type="file" id='inport_eng' v-show='false'  :onchange="file_read()">
+            </input>
+
             <!-- <button type="button" class="mod-btn mod-btn-rank" @click="showButtonList" @blur="hiddenList">
               <i class="mod-btn-icon fa fa-sort"></i>排序
             </button>-->
@@ -46,8 +49,8 @@
                   {{research.value}}</option>
               </select>
               <input id="research_content" type="text" name="" value="" class="input-1">
-              <button type="button" name="button" class="middle-btn-search" @click='search'>查询</button>
-              <button type="button" name="button" class="middle-btn-clear" @click='clear'>清空</button>
+              <button type="button" name="button" class="middle-btn-search" @click='search()'>查询</button>
+              <button type="button" name="button" class="middle-btn-clear" @click='clear()'>清空</button>
             </div>
           </div>
           <div class="tablecontent">
@@ -73,7 +76,7 @@
                   <button type="button" name="button" class='button_file' @click.prevent='openMadal(index)'>文件</button>
                   <button type="button" name="button" class='button_check'>查验</button>
                   <button type="button" name="button" class='button_copy'>复制</button>
-                  <button type="button" name="button" class='button_export'>导出</button>
+                  <button type="button" name="button" class='button_export' @click='export_eng(index)'>导出</button>
                   <button type="button" name="button" class='button_revocation'>撤回</button>
                   <button type="button" name="button" class='button_del' :disabled='del_disable(projects.status_id)' @click="del_eng(projects.id)">删除</button>
                 </td>
@@ -137,6 +140,7 @@ import icons_成员 from "../../../icons/工程设计/成员.png"
 import icons_查阅 from "../../../icons/工程设计/查阅.png"
 import icons_系统 from "../../../icons/工程设计/系统.png"
 import icons_总系统 from "../../../icons/工程设计/总系统.png"
+
 var that={};
 export default {
   name: 'engDesign',
@@ -503,6 +507,69 @@ export default {
         })
       }
     },
+    inport_eng:function() {
+      var x=document.getElementById('inport_eng');
+      x.click();
+    },
+    file_read:function(){
+      console.log('weqw');
+    },
+    download_eng:function(name,data) {
+      var urlObject = window.URL || window.webkitURL || window;
+      var export_blob = new Blob([data]);
+      var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+      save_link.href = urlObject.createObjectURL(export_blob);
+      save_link.download = name;
+      var ev = document.createEvent("MouseEvents");
+      ev.initMouseEvent(
+          "click", true, false, window, 0, 0, 0, 0, 0
+          , false, false, false, false, 0, null
+          );
+      save_link.dispatchEvent(ev)
+    },
+    export_eng:function(index) {
+      var export_eng_data={name:'',version:'',data:'',log:''};
+      console.log('idx',that.projects[index]);
+      $.ajax({
+        url: "get_eng_data.php",
+        type:'POST',
+        dataType:'Json',
+        data: {
+          "eng_id":that.projects[index].id,
+        },
+        success: function(data){
+          export_eng_data['data']=data['data'];
+          $.ajax({
+            url: "get_eng_log.php",
+            type:'POST',
+            dataType:'Json',
+            data: {
+              "eng_id":that.projects[index].id,
+            },
+            success: function(data){
+              export_eng_data['log']=data['data'];
+              $.ajax({
+                url: "get_eng_name.php",
+                type:'POST',
+                dataType:'Json',
+                data: {
+                  "eng_id":that.projects[index].id,
+                },
+                success: function(data){
+                  var name= data['name'];
+                  export_eng_data['name']=name;
+                  var version= data['version'];
+                  export_eng_data['version']=version;
+                  console.log(name);
+                  that.$options.methods.download_eng(name+'.'+version+'.JE_eng',JSON.stringify(export_eng_data));
+              }
+            })
+          }
+        })
+      }
+    })
+    },
+
     closeMadal: function() {
       this.isAlter2=false;
     },
