@@ -29,7 +29,7 @@
             <button type="button" class="mod-btn mod-btn-imp" :disabled='change_button_disabled("导入")' :style='change_button_backgroundcolor("导入")' @click='inport_eng()'>
               <i class="mod-btn-icon fa fa-reply"></i>导入
             </button>
-            <input type="file" id='inport_eng' v-show='false'  :onchange="file_read()">
+            <input type="file" id='inport_eng' v-show='false'  @change="file_read()">
             </input>
 
             <!-- <button type="button" class="mod-btn mod-btn-rank" @click="showButtonList" @blur="hiddenList">
@@ -508,10 +508,39 @@ export default {
       }
     },
     inport_eng:function() {
+
       var x=document.getElementById('inport_eng');
+      x.value='';
       x.click();
     },
     file_read:function(){
+      if(typeof FileReader == "undified") {
+          alert("您老的浏览器不行了！");
+      }
+      else {
+          var resultFile = document.getElementById("inport_eng").files[0];
+          if (resultFile) {
+                var reader = new FileReader();
+                reader.readAsText(resultFile,'UTF-8');
+                reader.onload = function (ev) {
+                    var urlData =ev.currentTarget.result;
+                    var x=JSON.parse(urlData);
+                    console.log(x);
+                    $.ajax({
+                      url: "eng_inport.php",
+                      type:'POST',
+                      dataType:'Json',
+                      data: {
+                        "eng":x,
+                        "classification_id":that.classification_id,
+                      },
+                      success: function(data){
+                        console.log(data);
+                    }
+                  })
+                };
+              }
+      }
       console.log('weqw');
     },
     download_eng:function(name,data) {
