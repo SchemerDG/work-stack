@@ -448,20 +448,26 @@ export default {
         {
             this.neworalt='new';
             this.project={
-              alttime:'',
-              category:this.category,
-              classification_id:this.classification_id,
-              designer:'',
-              id:'',
-              main_designer_name:'',
-              member:[],
-              proname:'',
-              statime:'',
-              status:'',
-              status_id:'',
-              version:'',
-              description:'',
-              version_description:''
+              'alttime':'',
+              'category':this.category,
+              'classification_id':this.classification_id,
+              'designer':'',
+              'id':'',
+              'main_designer_name':'',
+              'member':[],
+              'proname':'',
+              'statime':'',
+              'status':'',
+              'status_id':'',
+              'version':'',
+              'description':'',
+              'version_description':'',
+              'eng_data':'<Head>'+'\r\n'
+              +'<IEname>: IE_Name=vdsvdsgfds;'+'\r\n'
+              +'<Dev_Models>:;'+'\r\n'
+              +'<End_Head>'+'\r\n'
+              +'<Instr>'+'\r\n'
+              +'<End_Instr>'+'\r\n',
             };
             var myDate = new Date();//获取系统当前时间
             this.project['statime']=myDate.toLocaleString('chinese',{hour12:false});
@@ -524,20 +530,57 @@ export default {
                 reader.readAsText(resultFile,'UTF-8');
                 reader.onload = function (ev) {
                     var urlData =ev.currentTarget.result;
-                    var x=JSON.parse(urlData);
-                    console.log(x);
-                    $.ajax({
-                      url: "eng_inport.php",
-                      type:'POST',
-                      dataType:'Json',
-                      data: {
-                        "eng":x,
-                        "classification_id":that.classification_id,
-                      },
-                      success: function(data){
-                        console.log(data);
+                    var inport_eng=JSON.parse(urlData);
+                    console.log(inport_eng);
+                    console.log(that.projects);
+                    var eng_exit=false;
+                    for(var i=0;i<that.projects.length;i++)
+                    {
+                      if(that.projects[i].proname==inport_eng.name&&that.projects[i].version==inport_eng.version)
+                      {
+                        eng_exit=true;
+                      }
                     }
-                  })
+                    if(eng_exit===false)
+                    {
+                      $.ajax({
+                        url:"who_i_am.php",
+                        type:"POST",
+                        dataType:"Json",
+                        data:{
+                          "state":'who_i_am',
+                        },
+                        success:function(data){
+                            var myDate = new Date();//获取系统当前时间
+                            var eng_inport_data={
+                            'proname':inport_eng.name,
+                            'classification_id':that.classification_id,
+                            'version':inport_eng.version,
+                            'statime':myDate.toLocaleString('chinese',{hour12:false}),
+                            'alttime':'',
+                            'designer':data['user_id'],
+                            'status_id':1,
+                            'description':'',
+                            'version_description':'',
+                            'eng_data':inport_eng.data.join('\r\n'),
+                          };
+                          console.log(eng_inport_data);
+                          $.ajax({
+                            url: "add_engineering.php",
+                            type:'POST',
+                            dataType:'Json',
+                            data: {
+                              "data": eng_inport_data,
+                            },
+                            success: function(data){
+                              that.$options.methods.refresh();
+                              console.log(data);
+                            }
+                          })
+                        }
+                      })
+                    }
+
                 };
               }
       }

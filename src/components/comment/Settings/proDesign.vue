@@ -370,6 +370,8 @@ export default {
           data=data+that.eng_data[i];
         }
       }
+      var a={'xx':data};
+      console.log(a);
       console.log(data);
 
       $.ajax({
