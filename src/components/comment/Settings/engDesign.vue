@@ -337,8 +337,10 @@ export default {
                 "classification_id":that.classification_id,
               },
               success:function(data){
-                that.projects =data;
-                console.log(that.projects);
+                if(data[0]==true)
+                {
+                  that.$options.methods.refresh();
+                }
               }
             })
     },
@@ -552,6 +554,7 @@ export default {
                         },
                         success:function(data){
                             var myDate = new Date();//获取系统当前时间
+                            var log_data=inport_eng.log;
                             var eng_inport_data={
                             'proname':inport_eng.name,
                             'classification_id':that.classification_id,
@@ -575,10 +578,32 @@ export default {
                             success: function(data){
                               that.$options.methods.refresh();
                               console.log(data);
+                              var id = data['eng_id'];
+                              console.log(";log_data",log_data);
+                              for(var i=0;i<log_data.length;i++)
+                              {
+                                console.log(log_data[i]);
+                                $.ajax({
+                                  url: "add_eng_log.php",
+                                  type:'POST',
+                                  dataType:'Json',
+                                  data: {
+                                    "data": log_data[i],
+                                    "id":id,
+                                  },
+                                  success: function(data){
+                                    console.log("log_ok");
+                                  }
+                                })
+                              }
                             }
                           })
                         }
                       })
+                    }
+                    else
+                    {
+                      alert("该工程已经有相同版本存在");
                     }
 
                 };
@@ -850,7 +875,7 @@ export default {
       }
       button {
         height: 20px;
-        width: 25px;
+        width: 30px;
         background-color:  rgb(207, 69, 113);
         border-radius: 4px;
         line-height: inherit;

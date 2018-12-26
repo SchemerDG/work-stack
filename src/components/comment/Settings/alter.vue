@@ -106,7 +106,6 @@ export default {
       now_memberlist:[],
       isAlter: true,
       isalter3:false,
-      msg:"",
       msg1:'',
       whichbtn:"",
       onlyUser:false,
